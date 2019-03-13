@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>KeepMe-V.0</title>
+
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="font-awesome.min.css"></h:outputStylesheet>
+	<h:outputScript library="js" name="jquery.min.js"></h:outputScript>
+	<h:outputScript library="js" name="popper.min.js"></h:outputScript>
+	<h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+
+	<link href="/resources/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="/resources/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+
+</h:head>
+<body>
+
+	<h1 class="text-center">KeepMe-V.0</h1>
+	<h:messages styleClass="alert alert-info" showDetail="true"
+		showSummary="false" />
+	<section class="container">
+		<h:form styleClass="form-inline mt-5">
+
+			<div class="form-group mr-4">
+				<h:outputLabel value="What's you keep?" styleClass="mr-2" />
+				<h:inputText styleClass="form-control w-100"
+					value="#{keepListBean.title}" p:placeholder="Title" />
+			</div>
+
+			<h:commandLink styleClass="btn btn-outline-info mr-2 mt-4"
+				action="#{keepListBean.search()}">
+				<i class="fa fa-search"></i> Search
+			</h:commandLink>
+			<h:link styleClass="btn btn-outline-info mr-2 mt-4"
+				outcome="/add-new">
+				<i class="fa fa-plus-circle"></i>KeepMe
+			</h:link>
+
+		</h:form>
+
+		<h:dataTable value="#{keepListBean.KEEPME}" var="k"
+			styleClass="table table-striped mt-5">
+			<h:column>
+				<f:facet name="header">ID</f:facet>#{k.id}
+		</h:column>
+			<h:column>
+				<f:facet name="header">Title</f:facet>#{k.title}
+		</h:column>
+			<h:column>
+				<f:facet name="header">Date</f:facet>
+				<h:outputText value="#{k.postTime}"
+					converter="#{localDateTimeConverter}" />
+			</h:column>
+
+			<h:column>
+				<h:form>
+
+					<h:link outcome="/add-new" styleClass="btn btn-info mr-3">
+						<i class="fa fa-send"></i>View
+					<f:param name="id" value="#{k.id}"></f:param>
+					</h:link>
+
+					<h:link outcome="/add-new" styleClass="btn btn-info mr-3">
+						<i class="fa fa-edit"></i>Edit
+					<f:param name="id" value="#{k.id}"></f:param>
+					</h:link>
+
+					<h:commandLink action="#{keepListBean.delete(k.id)}"
+						styleClass="btn btn-danger">
+						<i class="fa fa-trash"></i>Delete
+					</h:commandLink>
+				</h:form>
+			</h:column>
+		</h:dataTable>
+	</section>
+</body>
+</html>
